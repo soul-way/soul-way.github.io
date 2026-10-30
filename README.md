@@ -111,18 +111,3 @@ All internal HTML links and image references start at the **site root**, such as
 
 The site is designed for **domain-root installation**. GitHub Actions generates absolute canonical and sitemap URLs at deployment, while all navigation, CSS and image paths remain root-absolute (`/`). On ordinary hosting, the optional SEO build command can use your own domain without editing the HTML files.
 
-### Reading full articles
-
-The hero banner on a full article is **200 px high** on desktop and mobile, and does **not** contain a redundant “Read More” button. Overview/cover pages retain their original visual proportions.
-
-
-### Expanded video transcript summaries
-
-The six linked source transcripts each have an extended editorial summary in all 14 languages. The summaries are roughly three times longer than before. They describe the contents of the creators' recordings without reproducing the full source texts; the video and original transcript links remain accessible at the bottom of each page.
-
-
-## Final navigation updates
-
-The footer link **Why This Website Exists** goes directly to the full article (`/<language>/about_read.html`) in every language. The video library, Sources and FAQ remain available in the header, mobile menu, sidebar or footer. The language selector contains 14 choices, with Ukrainian immediately after German. The desktop navigation uses two rows to protect the language dropdown against overlap, including on Portuguese and Indonesian pages.
-
-The Ukrainian pages are newly authored editorial translations and are not native-speaker-proofread.
