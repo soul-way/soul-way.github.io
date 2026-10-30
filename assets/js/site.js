@@ -1,0 +1,23 @@
+(function(){'use strict';
+ document.querySelectorAll('[data-current-year]').forEach(function(el){el.textContent=String(new Date().getFullYear());});
+ var selector=document.getElementById('site-language');
+ if(selector){selector.addEventListener('change',function(){var urls={};try{urls=JSON.parse(this.getAttribute('data-language-urls')||'{}');}catch(e){}location.href=urls[this.value]||'/';});}
+ var toggle=document.getElementById('mobile-menu-toggle'),menu=document.getElementById('mobile-menu');
+ if(toggle&&menu){toggle.addEventListener('click',function(){var open=this.getAttribute('aria-expanded')==='true';this.setAttribute('aria-expanded',open?'false':'true');menu.hidden=open;});}
+ var area=document.getElementById('copy-declaration');
+ var copy=document.getElementById('copy-button');
+ function declarationText(){return Array.prototype.map.call(area.querySelectorAll('p'),function(p){return p.textContent.trim();}).join('\n');}
+ if(copy&&area){copy.addEventListener('click',function(){var btn=this,txt=declarationText(),success=function(){btn.textContent=btn.getAttribute('data-success')||'✓';setTimeout(function(){btn.textContent=btn.getAttribute('data-default')||'Copy';},2000);};
+ if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(txt).then(success).catch(function(){});}else{var t=document.createElement('textarea');t.value=txt;document.body.appendChild(t);t.select();try{document.execCommand('copy');success();}catch(e){}document.body.removeChild(t);}});}
+ var earth=document.getElementById('earth-statement'),earthCopy=document.getElementById('copy-earth-statement'),earthPrint=document.getElementById('print-earth-statement');
+ if(earth&&earthCopy){earthCopy.addEventListener('click',function(){var btn=this,txt=Array.prototype.map.call(earth.querySelectorAll('p'),function(p){return p.textContent.trim();}).join('\n'),ok=function(){btn.textContent=btn.getAttribute('data-success')||'✓';setTimeout(function(){btn.textContent=btn.getAttribute('data-default')||'Copy';},1900);};
+ if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(txt).then(ok).catch(function(){});}else{var t=document.createElement('textarea');t.value=txt;document.body.appendChild(t);t.select();try{document.execCommand('copy');ok();}catch(e){}document.body.removeChild(t);}});}
+ if(earthPrint){earthPrint.addEventListener('click',function(){window.print();});}
+ var listen=document.getElementById('listen-button');
+ if(listen&&area&&'speechSynthesis' in window){listen.addEventListener('click',function(){if(window.speechSynthesis.speaking){window.speechSynthesis.cancel();return;}var u=new SpeechSynthesisUtterance(declarationText());u.lang=listen.getAttribute('data-speech-lang')||document.documentElement.lang;u.rate=.9;window.speechSynthesis.speak(u);});}
+ var print=document.getElementById('print-button');if(print){print.addEventListener('click',function(){window.print();});}
+ var share=document.getElementById('share-button');if(share){share.addEventListener('click',function(){if(navigator.share){navigator.share({title:document.title,url:location.href}).catch(function(){});}else if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(location.href).then(function(){share.textContent='✓';setTimeout(function(){share.textContent='↗';},1800);});}});}
+ var filters=document.querySelectorAll('.filter-btn');if(filters.length){Array.prototype.forEach.call(filters,function(btn){btn.addEventListener('click',function(){var filter=this.getAttribute('data-filter');Array.prototype.forEach.call(filters,function(b){b.classList.toggle('active',b===btn);});Array.prototype.forEach.call(document.querySelectorAll('.source-item'),function(item){item.hidden=filter!=='all'&&item.getAttribute('data-category')!==filter;});});});}
+ var videoModal=document.getElementById('videoModal'),mount=document.getElementById('video-mount');
+ if(videoModal&&mount){Array.prototype.forEach.call(document.querySelectorAll('[data-video-id]'),function(btn){btn.addEventListener('click',function(){if(!window.bootstrap||!window.bootstrap.Modal)return;var id=btn.getAttribute('data-video-id');if(!/^[\w-]{11}$/.test(id))return;var el=document.createElement('iframe');el.setAttribute('title','YouTube video');el.setAttribute('allowfullscreen','');el.setAttribute('loading','lazy');el.setAttribute('referrerpolicy','strict-origin-when-cross-origin');el.src='https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1';el.setAttribute('allow','accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture');mount.replaceChildren(el);window.bootstrap.Modal.getOrCreateInstance(videoModal).show();});});videoModal.addEventListener('hidden.bs.modal',function(){mount.replaceChildren();});}
+})();

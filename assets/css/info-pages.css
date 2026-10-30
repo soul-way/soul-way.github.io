@@ -1,0 +1,43 @@
+
+/* Video-library-inspired layout for Sources, FAQ, and About. */
+body.vl-info-page .shell{max-width:1920px;width:100%;}
+body.vl-info-page .video-library{min-height:75vh;}
+body.vl-info-page .vl-top-banner{background-image:linear-gradient(90deg,rgba(2,7,14,.23),rgba(2,7,14,.15)),url('/assets/img/library-banner.jpg');}
+.vl-info-page .vl-heading{border-bottom:1px solid rgba(202,166,99,.28);margin-bottom:15px;}
+.vl-info-page .vl-heading h1{font-size:clamp(31px,3vw,49px);}
+.vl-info-page .vl-main{min-width:0;overflow-wrap:anywhere;}
+.vl-info-page .vl-info-panel{border:1px solid rgba(197,152,74,.62);border-radius:15px;background:linear-gradient(150deg,rgba(10,32,53,.94),rgba(2,12,26,.96));padding:clamp(16px,2.6vw,30px);box-shadow:0 10px 30px rgba(0,0,0,.4);}
+.vl-info-page .vl-info-intro{color:#ebe6d9;font-size:clamp(14px,1.2vw,17px);line-height:1.7;margin:0 0 18px;}
+.vl-info-page .vl-info-top-actions{display:flex;gap:10px;flex-wrap:wrap;margin:15px 0;}
+.vl-info-page .vl-info-button{display:inline-flex;align-items:center;gap:8px;padding:10px 15px;border:1px solid #e3be79;border-radius:7px;background:linear-gradient(#f4d89d,#b97d35);color:#0d1b2b!important;font-weight:750;font-size:13px;text-decoration:none;}
+.vl-info-page .vl-info-button:hover{filter:brightness(1.15);}
+.vl-info-page .vl-info-button.secondary{background:#122b43;color:#eed2a0!important;}
+.vl-info-page .vl-info-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;}
+.vl-info-page .vl-info-card{display:flex;flex-direction:column;border:1px solid rgba(196,153,83,.7);border-radius:12px;background:linear-gradient(180deg,#102b46,#031223);overflow:hidden;color:#e9e6df!important;text-decoration:none!important;}
+.vl-info-page .vl-info-card:hover{border-color:#f4cc80;transform:translateY(-2px);box-shadow:0 12px 32px #0007;}
+.vl-info-page .vl-info-card img{width:100%;height:140px;object-fit:cover;filter:saturate(1.13);}
+.vl-info-page .vl-info-card-body{padding:13px;display:flex;flex-direction:column;flex:1;}
+.vl-info-page .vl-info-card h2,.vl-info-page .vl-info-card h3{color:#ffdda6;font:700 clamp(20px,2vw,27px)/1.14 'Cormorant Garamond',Georgia,serif;margin:0 0 6px;}
+.vl-info-page .vl-info-card p{font:400 13px/1.6 Manrope,Arial,sans-serif;color:#e2e3e9;margin:0 0 9px;}
+.vl-info-page .vl-info-card .vl-info-more{color:#f2ce86;font-weight:700;margin-top:auto;}
+.vl-info-page .vl-info-faq{border:1px solid rgba(200,161,89,.5);border-radius:11px;background:#091e34;padding:16px;margin-bottom:13px;}
+.vl-info-page .vl-info-faq h2,.vl-info-page .vl-info-faq h3{font:700 clamp(21px,2vw,27px)/1.2 'Cormorant Garamond',Georgia,serif;color:#ffdda4;margin:0 0 10px;}
+.vl-info-page .vl-info-faq p{font:400 14px/1.65 Manrope,Arial,sans-serif;color:#ebe8e1;margin:0;}
+.vl-info-page .vl-info-copy p{font:400 clamp(14px,1.3vw,17px)/1.78 Manrope,Arial,sans-serif;margin:0 0 18px;color:#e9e7e1;}
+.vl-info-page .vl-info-copy h2{font:700 clamp(28px,2.6vw,39px) 'Cormorant Garamond',Georgia,serif;color:#ffe0a6;margin:8px 0 13px;}
+.vl-info-page .vl-info-copy h3{font:700 clamp(22px,2vw,28px) 'Cormorant Garamond',Georgia,serif;color:#f0cd91;margin:16px 0 10px;}
+.vl-info-page .vl-info-copy a{color:#f8cf81;}
+.vl-info-page .vl-info-copy .chapter-quote{margin-top:20px;}
+.vl-info-page .vl-info-source-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;}
+.vl-info-page .vl-info-source-list .source-item{margin:0!important;border:1px solid rgba(190,155,88,.65);border-radius:12px;background:linear-gradient(155deg,#122943,#061426);padding:17px;box-shadow:0 8px 25px #0008;min-width:0;}
+.vl-info-page .vl-info-source-list .source-item h3{font:700 23px/1.15 'Cormorant Garamond',Georgia,serif;color:#ffdda4;}
+.vl-info-page .vl-info-source-list .source-item p{font:400 13px/1.6 Manrope,Arial,sans-serif;color:#e2dfd9;}
+.vl-info-page .vl-info-source-list .source-links{display:flex;flex-wrap:wrap;gap:9px;}
+.vl-info-page .vl-info-source-list .source-links a{color:#ffdb98;}
+.vl-info-page .vl-info-source-list .source-ornament{opacity:.35;}
+.vl-info-page .vl-info-related{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;}
+.vl-info-page .vl-info-related a{display:inline-flex;padding:9px 12px;border:1px solid rgba(214,166,83,.7);border-radius:7px;text-decoration:none;color:#f0d199!important;background:#0b1d31;font-size:13px;}
+.vl-info-page .vl-info-related a:hover{background:#1a3e59;}
+body.vl-info-page.rtl-mode .vl-info-card-body{text-align:right;}
+@media(max-width:1100px){.vl-info-page .vl-info-source-list{grid-template-columns:1fr;}}
+@media(max-width:700px){.vl-info-page .vl-info-grid{grid-template-columns:1fr;}.vl-info-page .vl-info-source-list{grid-template-columns:1fr;}.vl-info-page .vl-info-card img{height:165px;}.vl-info-page .vl-info-panel{padding:13px;}.vl-info-page .vl-heading h1{font-size:34px;}}

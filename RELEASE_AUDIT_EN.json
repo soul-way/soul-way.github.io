@@ -1,0 +1,86 @@
+{
+  "site": "Soul Way — After Death: The Right to Choose",
+  "default_language": "en",
+  "languages": [
+    "en",
+    "es",
+    "ru",
+    "fr",
+    "de",
+    "uk",
+    "it",
+    "pt",
+    "hi",
+    "ja",
+    "bn",
+    "id",
+    "zh",
+    "ar"
+  ],
+  "html_pages": 742,
+  "screenshots": 742,
+  "checked_local_links_and_assets": 53742,
+  "missing_local_assets": 0,
+  "video_records_per_language": 14,
+  "internal_transcripts_per_language": 6,
+  "readme_language": "English",
+  "homepage_screenshot": "Screenshots/en/index.jpg",
+  "files": {
+    "en": {
+      "html_pages": 53,
+      "screenshots": 53
+    },
+    "es": {
+      "html_pages": 53,
+      "screenshots": 53
+    },
+    "ru": {
+      "html_pages": 53,
+      "screenshots": 53
+    },
+    "fr": {
+      "html_pages": 53,
+      "screenshots": 53
+    },
+    "de": {
+      "html_pages": 53,
+      "screenshots": 53
+    },
+    "uk": {
+      "html_pages": 53,
+      "screenshots": 53
+    },
+    "it": {
+      "html_pages": 53,
+      "screenshots": 53
+    },
+    "pt": {
+      "html_pages": 53,
+      "screenshots": 53
+    },
+    "hi": {
+      "html_pages": 53,
+      "screenshots": 53
+    },
+    "ja": {
+      "html_pages": 53,
+      "screenshots": 53
+    },
+    "bn": {
+      "html_pages": 53,
+      "screenshots": 53
+    },
+    "id": {
+      "html_pages": 53,
+      "screenshots": 53
+    },
+    "zh": {
+      "html_pages": 53,
+      "screenshots": 53
+    },
+    "ar": {
+      "html_pages": 53,
+      "screenshots": 53
+    }
+  }
+}

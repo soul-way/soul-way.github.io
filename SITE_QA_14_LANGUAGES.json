@@ -1,0 +1,38 @@
+{
+  "languages": [
+    "en",
+    "es",
+    "ru",
+    "fr",
+    "de",
+    "uk",
+    "it",
+    "pt",
+    "hi",
+    "ja",
+    "bn",
+    "id",
+    "zh",
+    "ar"
+  ],
+  "pages_by_lang": {
+    "en": 53,
+    "es": 53,
+    "ru": 53,
+    "fr": 53,
+    "de": 53,
+    "uk": 53,
+    "it": 53,
+    "pt": 53,
+    "hi": 53,
+    "ja": 53,
+    "bn": 53,
+    "id": 53,
+    "zh": 53,
+    "ar": 53
+  },
+  "total_pages": 742,
+  "local_links_checked": 53742,
+  "errors": [],
+  "warnings": []
+}

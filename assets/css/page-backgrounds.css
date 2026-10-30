@@ -1,0 +1,33 @@
+/* One page-specific ambient illustration per page and detailed article. */
+body {
+  background-color: #010816 !important;
+  background-image: linear-gradient(180deg, rgba(2,9,20,.73), rgba(2,9,20,.93)), var(--page-scene, url('/assets/img/reference-home.jpg')) !important;
+  background-position: center top !important;
+  background-size: cover !important;
+  background-attachment: fixed !important;
+}
+/* Previously every content page used the same sky.jpg as its backdrop. */
+.reference-main {
+  background-image: linear-gradient(180deg, rgba(1,8,19,.89), rgba(1,8,19,.94)), var(--page-scene, url('/assets/img/reference-home.jpg')) !important;
+  background-position: center top !important;
+  background-size: cover !important;
+  background-attachment: fixed !important;
+}
+.site-main {
+  background-image: linear-gradient(180deg, rgba(2,9,20,.91), rgba(2,9,20,.94)), var(--page-scene, url('/assets/img/reference-home.jpg'));
+  background-position: center top;
+  background-size: cover;
+  background-attachment: fixed;
+}
+body.is-video-library .video-library {
+  background-image: radial-gradient(circle at 72% 12%, rgba(30,73,125,.22), transparent 48%), linear-gradient(180deg, rgba(2,9,19,.9), rgba(2,9,19,.97)), var(--page-scene, url('/assets/img/visual-stories.jpg')) !important;
+  background-position: center top;
+  background-size: cover;
+}
+/* Readable long-form pages retain their deep navy panels, with a faint scene behind. */
+.chapter-layout, .reading-layout {
+  background-image: linear-gradient(180deg, rgba(2,9,18,.94), rgba(2,9,18,.96)), var(--page-scene, url('/assets/img/reference-home.jpg')) !important;
+  background-position: center top;
+  background-size: cover;
+}
+@media(max-width: 767px){body,.reference-main,.site-main{background-attachment:scroll!important}}
