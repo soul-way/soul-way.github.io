@@ -17,6 +17,12 @@
   let activeRequest=0, startedBackground=false, fakeFull=false;
   const fileName=(code,mode)=> (mode==='art'?'index2':'index')+(code==='en'?'':'-'+code)+'.html';
   const pageUrl=(code,mode)=>fileName(code,mode)+'?c='+current;
+  // Theme links must track the LIVE card number, not only the initial URL.
+  // This also keeps middle-click, Ctrl/Cmd-click, and Copy link address correct.
+  function syncThemeLinks(){
+    $('lightLink').href=pageUrl(lang,'artgold');
+    $('darkLink').href=pageUrl(lang,'art');
+  }
   const num=i=>String(i).padStart(2,'0');
   const possiblePaths=i=>{
     const f='soul'+num(i)+'.jpg';
@@ -71,7 +77,7 @@
     updateThumbSelected();
   }
   function show(i,updateHistory=true){
-    current=((i-1+N)%N)+1;const request=++activeRequest;updateCounter();
+    current=((i-1+N)%N)+1;const request=++activeRequest;updateCounter();syncThemeLinks();
     const params=new URLSearchParams(location.search);
     params.set('c',String(current));params.delete('card');
     history.replaceState(null,'',location.pathname+'?'+params.toString()+location.hash);
@@ -158,7 +164,7 @@
     $('exitFull').title=t.exit;$('exitFull').setAttribute('aria-label',t.exit);
     $('prev').setAttribute('aria-label',t.previous);$('next').setAttribute('aria-label',t.next);
     document.title='Soul Way — '+t.heading;
-    $('lightLink').href=pageUrl(lang,'artgold');$('darkLink').href=pageUrl(lang,'art');
+    syncThemeLinks();
     for(const [id,mode] of [['lightLink','artgold'],['darkLink','art']]){
       const el=$(id);el.classList.toggle('active',theme===mode);
       if(theme===mode)el.setAttribute('aria-current','page');else el.removeAttribute('aria-current');
@@ -295,6 +301,10 @@
     }
   });
 
+  // Recheck destination at activation (mouse, keyboard, touch).
+  for(const [id,mode] of [['lightLink','artgold'],['darkLink','art']]){
+    $(id).addEventListener('click',()=>{ $(id).href=pageUrl(lang,mode); });
+  }
   setupLanguagePicker();localizedButtons();buildThumbnails();
   if('ResizeObserver'in window)new ResizeObserver(setSize).observe(player);
   else window.addEventListener('resize',setSize);
