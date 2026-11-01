@@ -129,24 +129,67 @@
     // Outside arrows whenever there is enough side clearance for the entire control.
     const arrowsOutside=roomEachSide>=arrowWidth+13;
     player.classList.toggle('arrows-outside',arrowsOutside);
+    // The photo itself is an action ONLY when both arrows are OUTSIDE it.
+    // If arrows overlap the graphic, tapping the photo does nothing.
+    updatePhotoTapAffordance(arrowsOutside && !isFull());
     player.style.setProperty('--card-w',width+'px');
     player.style.setProperty('--card-h',height+'px');
     player.style.setProperty('--card-size',width+'px');
     player.style.setProperty('--arrow-width',arrowWidth+'px');
+    updateBottomFullscreenVisibility();
+  }
+  function updatePhotoTapAffordance(enabled){
+    // Make the accessible/keyboard semantics match touch and mouse behavior.
+    stage.dataset.tapFullscreen=enabled?'true':'false';
+    if(enabled){
+      stage.setAttribute('role','button');
+      stage.setAttribute('tabindex','0');
+      stage.setAttribute('aria-label',t.full);
+    } else {
+      stage.removeAttribute('role');
+      stage.removeAttribute('tabindex');
+      stage.removeAttribute('aria-label');
+    }
+  }
+  // Do not decide visibility by phone model or viewport height: the unfolded
+  // screen has room for three actions, even if its CSS height is small.
+  function updateBottomFullscreenVisibility(){
+    const panel=document.querySelector('.action-panel');
+    const full=$('fullBtnBottom');
+    if(!panel||!full)return;
+    const share=$('shareCard'),download=$('downloadCard');
+    const style=getComputedStyle(panel);
+    const gap=parseFloat(style.columnGap||style.gap)||0;
+    const inset=(parseFloat(style.paddingLeft)||0)+(parseFloat(style.paddingRight)||0);
+    const iconWidth=innerWidth<=600?36:40;
+    const required=share.getBoundingClientRect().width+download.getBoundingClientRect().width+iconWidth+gap*2+inset;
+    panel.classList.toggle('has-fullscreen-room',panel.clientWidth >= required-1);
+  }
+  function syncFullscreenUI(){
+    const title=isFull()?t.exit:t.full;
+    for(const id of ['fullBtn','fullBtnBottom']){
+      const btn=$(id);if(btn){btn.title=title;btn.setAttribute('aria-label',title);}
+    }
   }
   function scrollActiveThumb(){const b=thumbs.get(current);if(b)b.scrollIntoView({behavior:'smooth',inline:'nearest',block:'nearest'});}
   async function enterFull(){
-    try {if(player.requestFullscreen){await player.requestFullscreen();setSize();return;}}
+    try {if(player.requestFullscreen){await player.requestFullscreen();setSize();syncFullscreenUI();return;}}
     catch(e){/* Some mobile browsers disallow the Fullscreen API */}
-    fakeFull=true;document.body.classList.add('immersive');setSize();
+    fakeFull=true;document.body.classList.add('immersive');setSize();syncFullscreenUI();
   }
   async function exitFull(){if(document.fullscreenElement){try{await document.exitFullscreen();}catch(_){}}
-    fakeFull=false;document.body.classList.remove('immersive');setSize();}
+    fakeFull=false;document.body.classList.remove('immersive');setSize();syncFullscreenUI();}
   function isFull(){return !!document.fullscreenElement||fakeFull;}
   function localizedButtons(){
     $('heroCaption').textContent=t.heading+' · '+t.cards;
     $('thumbnailsHeading').textContent=t.all;
     $('lightText').textContent=t.art;$('darkText').textContent=t.dark;
+    // Theme labels may be hidden visually on the narrowest phones.
+    // Keep full localized names available to screen readers and long-press tooltips.
+    $('lightLink').setAttribute('aria-label',t.art);
+    $('darkLink').setAttribute('aria-label',t.dark);
+    $('lightLink').title=t.art;
+    $('darkLink').title=t.dark;
     // Both wide desktop navigation and compact mobile shortcuts share these localized links.
     const navLabels=window.SOUL_NAV_LABELS?.[lang]||window.SOUL_NAV_LABELS?.en||{};
     const targets={home:'/',journey:`/${lang}/journey.html`,meeting:`/${lang}/meeting.html`,reptilians:`/${lang}/reptilians.html`,about:`/${lang}/about.html`};
@@ -203,16 +246,21 @@
   $('next').addEventListener('click',()=>{show(current+1);scrollActiveThumb();});
   $('fullBtn').addEventListener('click',()=>{isFull()?exitFull():enterFull();});
   $('fullBtnBottom')?.addEventListener('click',()=>{isFull()?exitFull():enterFull();});
-  // Desktop: clicking the actual illustration opens the native fullscreen player.
-  // On touch devices a tap never steals focus from swiping or other gestures.
+  // STRICT rule: only an OUTSIDE-arrows layout lets the photograph open
+  // fullscreen. With INSIDE arrows, tapping the photograph has NO effect.
+  // The fullscreen toolbar buttons work independently in either layout.
+  let suppressTapUntil=0;
   stage.addEventListener('click',()=>{
-    if(!isFull() && !overviewOpen && matchMedia('(pointer:fine)').matches)enterFull();
+    if(isFull()||overviewOpen||performance.now()<suppressTapUntil)return;
+    if(stage.dataset.tapFullscreen==='true')enterFull();
   });
   stage.addEventListener('keydown',ev=>{
-    if(!isFull() && (ev.key==='Enter'||ev.key===' ')){ev.preventDefault();enterFull();}
+    if(stage.dataset.tapFullscreen==='true' && !isFull() && (ev.key==='Enter'||ev.key===' ')){
+      ev.preventDefault();enterFull();
+    }
   });
   $('exitFull').addEventListener('click',exitFull);
-  document.addEventListener('fullscreenchange',setSize);
+  document.addEventListener('fullscreenchange',()=>{setSize();syncFullscreenUI();});
   document.addEventListener('keydown',ev=>{
     if(ev.target?.matches?.('select,input,textarea,button,a')||ev.altKey||ev.ctrlKey||ev.metaKey)return;
     if(ev.key==='ArrowRight'){show(current+1);scrollActiveThumb();ev.preventDefault();}
@@ -222,7 +270,10 @@
   let x0=null,y0=null;
   stage.addEventListener('pointerdown',ev=>{if(ev.pointerType==='touch'||ev.pointerType==='pen'){x0=ev.clientX;y0=ev.clientY;}});
   stage.addEventListener('pointerup',ev=>{if(x0===null)return;const dx=ev.clientX-x0,dy=ev.clientY-y0;x0=y0=null;
-    if(Math.abs(dx)>43&&Math.abs(dx)>Math.abs(dy)*1.25){show(current+(dx<0?1:-1));scrollActiveThumb();}
+    if(Math.abs(dx)>43&&Math.abs(dx)>Math.abs(dy)*1.25){
+      suppressTapUntil=performance.now()+650;
+      show(current+(dx<0?1:-1));scrollActiveThumb();
+    }
   });
   window.addEventListener('popstate',()=>{const i=parseInt(new URLSearchParams(location.search).get('c')||new URLSearchParams(location.search).get('card'),10)||1;if(i!==current)show(i,false);});
 
@@ -308,5 +359,6 @@
   setupLanguagePicker();localizedButtons();buildThumbnails();
   if('ResizeObserver'in window)new ResizeObserver(setSize).observe(player);
   else window.addEventListener('resize',setSize);
+  window.addEventListener('resize',updateBottomFullscreenVisibility,{passive:true});
   setSize();show(current,false);
 })();
