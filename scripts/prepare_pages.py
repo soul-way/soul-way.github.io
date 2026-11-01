@@ -182,7 +182,7 @@ def main():
     url=normalize(args.site_url or os.environ.get('CUSTOM_SITE_URL','') or infer_site_url())
     if dest.exists(): shutil.rmtree(dest)
     dest.mkdir(parents=True)
-    for sub in ['en', 'es', 'ru', 'fr', 'de', 'uk', 'it', 'pt', 'hi', 'ja', 'bn', 'id', 'zh', 'ar', 'assets', 'Screenshots']:
+    for sub in ['en', 'es', 'ru', 'fr', 'de', 'uk', 'it', 'pt', 'hi', 'ja', 'bn', 'id', 'zh', 'ar', 'assets', 'Screenshots', 'art']:
         source_dir=source/sub
         if source_dir.exists():
             shutil.copytree(source_dir,dest/sub)
